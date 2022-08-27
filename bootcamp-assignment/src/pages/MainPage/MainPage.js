@@ -4,8 +4,11 @@ import Main from "./Main-photo-web.svg";
 import PC from "./PC.svg";
 import "./MainPage.css";
 import { Button } from "antd";
+import { useNavigate } from "react-router-dom";
 
 function MainPage() {
+  const navigete = useNavigate();
+
   return (
     <>
       <div className="main-container">
@@ -18,7 +21,11 @@ function MainPage() {
         </div>
         <div className="buttons-container">
           <div className="main-button-container add-button-container">
-            <Button className="main-button add-button" type="primary">
+            <Button
+              className="main-button add-button"
+              type="primary"
+              onClick={() => navigete(`/employeeInfo`)}
+            >
               ᲩᲐᲜᲐᲬᲔᲠᲘᲡ ᲓᲐᲛᲐᲢᲔᲑᲐ
             </Button>
           </div>
