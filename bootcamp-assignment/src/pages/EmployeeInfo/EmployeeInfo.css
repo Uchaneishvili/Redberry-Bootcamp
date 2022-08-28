@@ -1,0 +1,75 @@
+@media only screen and (max-width: 391px) {
+  .main-container {
+    padding: 30px 8px;
+  }
+
+  .tab-container {
+    overflow: hidden;
+    background-color: #f7f7f7;
+    padding: 30px 20px 0 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .bold-title {
+    font-weight: 700;
+    color: #232323;
+    text-align: center;
+  }
+  .page {
+    text-align: center;
+    color: #898989;
+    line-height: 17px;
+    font-size: 14px;
+  }
+
+  .custom-input {
+    border: 1.8px solid #8ac0e2;
+    border-radius: 8px;
+    width: 100%;
+    height: 60px;
+  }
+
+  .custom-select {
+    background-color: #ebebeb;
+    border-radius: 8px;
+    color: #000000;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    font-family: "HelveticaNeue";
+    font-size: 16px;
+    padding: 12px 8px;
+  }
+  .ant-select-selection-item {
+    font-weight: 600;
+  }
+
+  .ant-input {
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: 400;
+    font-family: "HelveticaNeue";
+  }
+
+  label {
+    font-weight: 800;
+    font-size: 18px;
+    height: 21px;
+  }
+
+  .ant-input-affix-wrapper {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 21px;
+  }
+
+  .ant-form-item-label
+    > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+    display: none;
+  }
+}
+.main-container {
+  width: 100%;
+}
