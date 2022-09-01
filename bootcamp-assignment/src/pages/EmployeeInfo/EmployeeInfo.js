@@ -3,16 +3,27 @@ import React from "react";
 import "./EmployeeInfo.css";
 import arrow from "./Vector.svg";
 import Footer from "./Footer-logo.svg";
+import { useNavigate } from "react-router-dom";
 
 function EmployeeInfo() {
   const { Option } = Select;
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
 
+  const validate = async () => {
+    try {
+      await form.validateFields();
+      navigate("/laptopSpecs");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <div className="parent-container">
         <div className="tab-container">
           <div className="arrow-vector-container">
-            <img src={arrow} alt="back" />
+            <img src={arrow} alt="back" onClick={() => window.history.back()} />
           </div>
           <div className="tab-title">
             <h5 className="bold-title">თანამშრომლის ინფო</h5>
@@ -22,10 +33,7 @@ function EmployeeInfo() {
         </div>
         <div className="main-container-container">
           <div className="main-employee-container">
-            <Form
-              initialValues={{ team: "თიმი", position: "პოზიცია" }}
-              layout={"vertical"}
-            >
+            <Form layout={"vertical"} form={form}>
               <div className="fullName-container">
                 <Form.Item
                   name={["user", "name"]}
@@ -37,7 +45,7 @@ function EmployeeInfo() {
                     },
                     {
                       message: "შეიყვანეთ მხოლოდ ქართული სიმბოლოები",
-                      pattern: "([]+|[\u10D0-\u10FF])",
+                      pattern: "^[ა-ჰ]+$",
                     },
                     { message: "შეიყვანეთ მინიმუმ 2 სიმბოლო", min: 2 },
                   ]}
@@ -54,7 +62,7 @@ function EmployeeInfo() {
                     },
                     {
                       message: "შეიყვანეთ მხოლოდ ქართული სიმბოლოები",
-                      pattern: "([]+|[\u10D0-\u10FF])",
+                      pattern: "^[ა-ჰ]+$",
                     },
                     { message: "შეიყვანეთ მინიმუმ 2 სიმბოლო", min: 2 },
                   ]}
@@ -63,8 +71,20 @@ function EmployeeInfo() {
                 </Form.Item>
               </div>
 
-              <Form.Item name="team">
-                <Select className="custom-select" bordered={false}>
+              <Form.Item
+                name="team"
+                rules={[
+                  {
+                    message: "ველის შევსება სავალდებულოა",
+                    required: true,
+                  },
+                ]}
+              >
+                <Select
+                  className="custom-select"
+                  bordered={false}
+                  placeholder={"თიმი"}
+                >
                   <Option value={1}>დეველოპმენტი</Option>
                   <Option value={2}>HR</Option>
                   <Option value={3}>გაყიდვები</Option>
@@ -72,11 +92,19 @@ function EmployeeInfo() {
                   <Option value={5}>მარკეტინგი</Option>
                 </Select>
               </Form.Item>
-              <Form.Item name="position">
+              <Form.Item
+                name="position"
+                rules={[
+                  {
+                    message: "ველის შევსება სავალდებულოა",
+                    required: true,
+                  },
+                ]}
+              >
                 <Select
                   className="custom-select"
                   bordered={false}
-                  rules={[{ required: true }]}
+                  placeholder={"თიმი"}
                 >
                   <Option value={1}>Hello</Option>
                 </Select>
@@ -117,12 +145,14 @@ function EmployeeInfo() {
             </Form>
 
             <div className="next-button-container">
-              <Button className="next-button">შემდეგი</Button>
+              <Button className="next-button" onClick={() => validate()}>
+                შემდეგი
+              </Button>
             </div>
           </div>
         </div>
         <div className="footer-logo-container">
-          <img src={Footer} />
+          <img src={Footer} alt="footer-redberry-icon" />
         </div>
       </div>
     </>

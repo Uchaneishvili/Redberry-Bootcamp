@@ -85,6 +85,7 @@
 
 .custom-input {
   border: 1.8px solid #8ac0e2;
+  border-radius: 8px;
   width: 100%;
   height: 60px;
 }
@@ -102,7 +103,6 @@
   justify-content: center;
   font-family: "HelveticaNeue";
   font-size: 16px;
-  padding: 0px;
 }
 
 .ant-select-selection-item {
@@ -141,10 +141,46 @@ label {
   background-color: #62a1eb;
   color: white;
 }
+.ant-input-suffix {
+  font-weight: 400;
+  width: 13px;
+  color: #797979;
+}
 
-.ant-select-selection-placeholder {
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.85);
+.image-uploader {
+  background-color: #f6f6f6;
+  border-radius: 8px;
+  border: 2px dashed #4386a9;
+  width: 100%;
+  height: 240px;
+}
+
+.image-uploader-error {
+  background-color: #f6f6f6;
+  border-radius: 8px;
+  border: 2px dashed #ff4d4f;
+  width: 100%;
+  height: 240px;
+}
+
+.camera-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.hint-container {
+  padding: 2%;
+  text-align: center;
+  width: 200px;
+  font-weight: 400;
+  color: #4386a9;
+  font-size: 16px;
 }
 
 .ant-select-selector {
