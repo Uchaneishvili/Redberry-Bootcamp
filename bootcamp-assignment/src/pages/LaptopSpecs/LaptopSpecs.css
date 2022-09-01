@@ -185,7 +185,12 @@ label {
 
 .ant-select-selector {
   height: 60px !important;
-  padding: 4% !important;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
   border-radius: 8px !important;
   background-color: #ebebeb !important;
 }
