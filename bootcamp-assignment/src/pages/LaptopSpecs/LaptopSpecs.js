@@ -251,9 +251,9 @@ function LaptopSpecs() {
               </div>
 
               <Row className="row">
-                <Form.Item name="condition" label={"შეძენის რიცხვი (არჩევითი)"}>
+                <Form.Item name="date" label={"შეძენის რიცხვი (არჩევითი)"}>
                   <DatePicker
-                    className="custom-input condition"
+                    className="custom-input date"
                     placeholder="დდ / თთ / წწ"
                     format={"DD/MM/YYYY"}
                   />
