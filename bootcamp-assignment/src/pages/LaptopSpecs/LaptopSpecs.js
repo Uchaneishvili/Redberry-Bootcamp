@@ -128,7 +128,7 @@ function LaptopSpecs() {
                     },
                   ]}
                 >
-                  <Input className="custom-input fields-in-a-row-child" />
+                  <Input className="custom-input laptop-name" />
                 </Form.Item>
 
                 <Form.Item
@@ -141,7 +141,7 @@ function LaptopSpecs() {
                   ]}
                 >
                   <Select
-                    className="custom-select fields-in-a-row-child"
+                    className="custom-select brand"
                     bordered={false}
                     placeholder="ლეპტოპის ბრენდი"
                     rules={[
@@ -204,11 +204,7 @@ function LaptopSpecs() {
 
               <Row className="row flexTop">
                 <Form.Item name="ram" label={"ლეპტოპის RAM (GB)"}>
-                  <Input
-                    type={"number"}
-                    min={0}
-                    className="custom-input fields-in-a-row-child"
-                  />
+                  <Input type={"number"} min={0} className="custom-input ram" />
                 </Form.Item>
                 <Form.Item
                   name="storage-type"

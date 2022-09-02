@@ -62,7 +62,8 @@
     justify-content: space-between;
   }
 
-  .fields-in-a-row-child,
+  .laptop-name,
+  .brand,
   .cpu,
   .price,
   .date {
@@ -81,8 +82,13 @@
   padding: 40px 0;
 }
 
-.fields-in-a-row-child {
-  width: 25vw;
+.brand,
+.laptop-name,
+.ram,
+.price,
+.condition,
+.date {
+  min-width: 25vw;
 }
 .flexTop {
   align-items: flex-start !important;
@@ -100,15 +106,9 @@
 }
 
 .cpu {
-  width: 15vw;
+  min-width: 15vw;
 }
 
-.ram,
-.price,
-.condition,
-.date {
-  width: 25vw;
-}
 .main-container-container {
   display: flex;
   align-content: center;
@@ -141,7 +141,6 @@
   height: 60px;
   display: flex;
   justify-content: center;
-  min-width: 15vw;
   font-family: "HelveticaNeue";
   font-size: 16px;
 }
