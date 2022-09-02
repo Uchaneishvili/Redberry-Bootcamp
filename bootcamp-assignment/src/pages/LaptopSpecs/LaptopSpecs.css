@@ -169,8 +169,14 @@ label {
   line-height: 21px;
 }
 
-.next-button-container {
-  text-align: end;
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 5%;
 }
 
 .next-button {
@@ -181,6 +187,22 @@ label {
   font-size: 20px;
   background-color: #62a1eb;
   color: white;
+}
+
+.back-button {
+  width: 130px;
+  height: 45px;
+  border: none;
+  box-shadow: 0 0 0 0;
+  justify-content: flex-start;
+  font-size: 20px;
+  background-color: white;
+  color: #62a1eb;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  align-items: center;
 }
 .ant-input-suffix {
   font-weight: 400;

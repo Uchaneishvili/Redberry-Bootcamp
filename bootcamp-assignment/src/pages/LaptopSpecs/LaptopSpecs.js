@@ -304,7 +304,13 @@ function LaptopSpecs() {
               </Form.Item>
             </Form>
 
-            <div className="next-button-container">
+            <div className="buttons-container">
+              <Button
+                className="back-button"
+                onClick={() => window.history.back()}
+              >
+                უკან
+              </Button>
               <Button className="next-button" onClick={() => validate()}>
                 შემდეგი
               </Button>
