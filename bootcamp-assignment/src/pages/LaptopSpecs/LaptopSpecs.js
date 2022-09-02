@@ -11,11 +11,11 @@ import {
 } from "antd";
 import React, { useState, useEffect } from "react";
 import "./LaptopSpecs.css";
-import arrow from "./Vector.svg";
 import Footer from "./Footer-logo.svg";
 import { useNavigate } from "react-router-dom";
 import Camera from "./Camera_Vector.svg";
-
+import Header from "../Header/Header";
+import arrow from "./Vector.svg";
 function LaptopSpecs() {
   const { Option } = Select;
   const [form] = Form.useForm();
@@ -65,10 +65,14 @@ function LaptopSpecs() {
             <img src={arrow} alt="back" onClick={() => window.history.back()} />
           </div>
           <div className="tab-title">
-            <h5 className="bold-title">ლეპტოპის მახასიათებლები</h5>
+            <h5 className="bold-title">ლეპტოპის ინფო</h5>
             <p className="page">2/2</p>
           </div>
           <div />
+        </div>
+
+        <div className="web-header">
+          <Header />
         </div>
         <div className="main-container-container">
           <div className="main-employee-container">
@@ -112,33 +116,11 @@ function LaptopSpecs() {
                   />
                 </div>
               </Form.Item>
-
-              <Form.Item
-                name={"laptopName"}
-                label={"ლეპტოპის სახელი"}
-                rules={[
-                  {
-                    message: "ველის შევსება სავალდებულოა",
-                    required: true,
-                  },
-                ]}
-              >
-                <Input className="custom-input" />
-              </Form.Item>
-
-              <Form.Item
-                name="laptopBrand"
-                rules={[
-                  {
-                    message: "ველის შევსება სავალდებულოა",
-                    required: true,
-                  },
-                ]}
-              >
-                <Select
-                  className="custom-select"
-                  bordered={false}
-                  placeholder="ლეპტოპის ბრენდი"
+              {/* <div className="fields-in-a-row-container"> */}
+              <Row className="row">
+                <Form.Item
+                  name={"laptopName"}
+                  label={"ლეპტოპის სახელი"}
                   rules={[
                     {
                       message: "ველის შევსება სავალდებულოა",
@@ -146,68 +128,116 @@ function LaptopSpecs() {
                     },
                   ]}
                 >
-                  <Option value={1}>დეველოპმენტი</Option>
-                  <Option value={2}>HR</Option>
-                  <Option value={3}>გაყიდვები</Option>
-                  <Option value={4}>დიზაინი</Option>
-                  <Option value={5}>მარკეტინგი</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                name="cpu"
-                rules={[
-                  {
-                    message: "ველის შევსება სავალდებულოა",
-                    required: true,
-                  },
-                ]}
-              >
-                <Select
-                  className="custom-select"
-                  bordered={false}
-                  placeholder="CPU"
+                  <Input className="custom-input fields-in-a-row-child" />
+                </Form.Item>
+
+                <Form.Item
+                  name="laptopBrand"
+                  rules={[
+                    {
+                      message: "ველის შევსება სავალდებულოა",
+                      required: true,
+                    },
+                  ]}
                 >
-                  <Option value={1}>დეველოპმენტი</Option>
-                  <Option value={2}>HR</Option>
-                  <Option value={3}>გაყიდვები</Option>
-                  <Option value={4}>დიზაინი</Option>
-                  <Option value={5}>მარკეტინგი</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item name="cpu-core" label={"CPU-ს ბირთვი"}>
-                <Input type={"number"} min={0} className="custom-input" />
-              </Form.Item>
-              <Form.Item name="cpu-thread" label={"CPU-ს ნაკადი"}>
-                <Input type={"number"} min={0} className="custom-input" />
-              </Form.Item>
-              <Form.Item name="ram" label={"ლეპტოპის RAM (GB)"}>
-                <Input type={"number"} min={0} className="custom-input" />
-              </Form.Item>
-              <Form.Item
-                name="storage-type"
-                label={"მეხსიერების ტიპი"}
-                rules={[
-                  {
-                    required: true,
-                    message: "მეხსიერების ტიპის არჩევა სავალდებულოა",
-                  },
-                ]}
-              >
-                <Radio.Group style={{ minWidth: 200 }}>
-                  <Row gutter={60}>
-                    <Col span={12}>
-                      <Radio style={{ fontWeight: 400 }} value={0}>
-                        SSD
-                      </Radio>
-                    </Col>
-                    <Col span={12}>
-                      <Radio style={{ fontWeight: 400 }} value={1}>
-                        HDD
-                      </Radio>
-                    </Col>
-                  </Row>
-                </Radio.Group>
-              </Form.Item>
+                  <Select
+                    className="custom-select fields-in-a-row-child"
+                    bordered={false}
+                    placeholder="ლეპტოპის ბრენდი"
+                    rules={[
+                      {
+                        message: "ველის შევსება სავალდებულოა",
+                        required: true,
+                      },
+                    ]}
+                  >
+                    <Option value={1}>დეველოპმენტი</Option>
+                    <Option value={2}>HR</Option>
+                    <Option value={3}>გაყიდვები</Option>
+                    <Option value={4}>დიზაინი</Option>
+                    <Option value={5}>მარკეტინგი</Option>
+                  </Select>
+                </Form.Item>
+              </Row>
+
+              {/* </div> */}
+              <div className="divider-container">
+                <Divider
+                  style={{
+                    color: "#C7C7C7",
+                    borderColor: "#C7C7C7",
+                    marginTop: "40px",
+                    marginBottom: "40px",
+                  }}
+                />
+              </div>
+
+              <Row className="row">
+                <Form.Item
+                  name="cpu"
+                  rules={[
+                    {
+                      message: "ველის შევსება სავალდებულოა",
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Select
+                    className="custom-select cpu"
+                    bordered={false}
+                    placeholder="CPU"
+                  >
+                    <Option value={1}>დეველოპმენტი</Option>
+                    <Option value={2}>HR</Option>
+                    <Option value={3}>გაყიდვები</Option>
+                    <Option value={4}>დიზაინი</Option>
+                    <Option value={5}>მარკეტინგი</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item name="cpu-core" label={"CPU-ს ბირთვი"}>
+                  <Input type={"number"} min={0} className="custom-input cpu" />
+                </Form.Item>
+                <Form.Item name="cpu-thread" label={"CPU-ს ნაკადი"}>
+                  <Input type={"number"} min={0} className="custom-input cpu" />
+                </Form.Item>
+              </Row>
+
+              <Row className="row flexTop">
+                <Form.Item name="ram" label={"ლეპტოპის RAM (GB)"}>
+                  <Input
+                    type={"number"}
+                    min={0}
+                    className="custom-input fields-in-a-row-child"
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="storage-type"
+                  label={"მეხსიერების ტიპი"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "ველი სავალდებულოა",
+                    },
+                  ]}
+                >
+                  <Radio.Group style={{ width: 200 }}>
+                    <Row gutter={60}>
+                      <Col span={12}>
+                        <Radio style={{ fontWeight: 400 }} value={0}>
+                          SSD
+                        </Radio>
+                      </Col>
+                      <Col span={12}>
+                        <Radio style={{ fontWeight: 400 }} value={1}>
+                          HDD
+                        </Radio>
+                      </Col>
+                    </Row>
+                  </Radio.Group>
+                </Form.Item>
+
+                <div></div>
+              </Row>
 
               <div className="divider-container">
                 <Divider
@@ -219,30 +249,34 @@ function LaptopSpecs() {
                   }}
                 />
               </div>
-              <Form.Item name="condition" label={"შეძენის რიცხვი (არჩევითი)"}>
-                <DatePicker
-                  className="custom-input"
-                  placeholder="დდ / თთ / წწ"
-                  format={"DD/MM/YYYY"}
-                />
-              </Form.Item>
-              <Form.Item
-                name="condition"
-                label={"ლეპტოპის ფასი"}
-                rules={[
-                  {
-                    required: true,
-                    message: "მდგომარეობის არჩევა სავალდებულოა",
-                  },
-                ]}
-              >
-                <Input
-                  type={"number"}
-                  className="custom-input"
-                  min={0}
-                  suffix={"₾"}
-                />
-              </Form.Item>
+
+              <Row className="row">
+                <Form.Item name="condition" label={"შეძენის რიცხვი (არჩევითი)"}>
+                  <DatePicker
+                    className="custom-input condition"
+                    placeholder="დდ / თთ / წწ"
+                    format={"DD/MM/YYYY"}
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="price"
+                  label={"ლეპტოპის ფასი"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "მდგომარეობის არჩევა სავალდებულოა",
+                    },
+                  ]}
+                >
+                  <Input
+                    type={"number"}
+                    className="custom-input price"
+                    min={0}
+                    suffix={"₾"}
+                  />
+                </Form.Item>
+              </Row>
+
               <Form.Item
                 name="condition"
                 label={"მდგომარეობა"}

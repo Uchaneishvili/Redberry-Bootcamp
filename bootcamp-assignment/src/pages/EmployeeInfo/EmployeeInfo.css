@@ -2,12 +2,15 @@
   .main-container {
     padding: 30px 8px;
   }
+  .web-header {
+    display: none !important;
+  }
 
   .tab-container {
     overflow: hidden;
     background-color: #f7f7f7;
     padding: 30px 20px 0 20px;
-    display: flex;
+    display: flex !important;
     flex-direction: row;
     justify-content: space-between;
   }
@@ -91,7 +94,7 @@
 
 .firstName,
 .lastName {
-  width: 25vw;
+  width: 25vw !important;
 }
 .custom-select {
   background-color: #ebebeb;
@@ -165,4 +168,8 @@ label {
   .ant-select-single
   .ant-select-show-arrow {
   padding: 0% !important;
+}
+
+.tab-container {
+  display: none;
 }

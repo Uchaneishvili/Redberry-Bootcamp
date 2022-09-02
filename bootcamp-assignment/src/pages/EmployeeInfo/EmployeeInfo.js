@@ -4,6 +4,7 @@ import "./EmployeeInfo.css";
 import arrow from "./Vector.svg";
 import Footer from "./Footer-logo.svg";
 import { useNavigate } from "react-router-dom";
+import Header from "../Header/Header";
 
 function EmployeeInfo() {
   const { Option } = Select;
@@ -31,6 +32,11 @@ function EmployeeInfo() {
           </div>
           <div />
         </div>
+
+        <div className="web-header">
+          <Header />
+        </div>
+
         <div className="main-container-container">
           <div className="main-employee-container">
             <Form layout={"vertical"} form={form}>
@@ -151,6 +157,7 @@ function EmployeeInfo() {
             </div>
           </div>
         </div>
+
         <div className="footer-logo-container">
           <img src={Footer} alt="footer-redberry-icon" />
         </div>
