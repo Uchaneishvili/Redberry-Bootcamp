@@ -169,7 +169,7 @@ label {
   line-height: 21px;
 }
 
-.buttons-container {
+.footer-buttons-container {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;

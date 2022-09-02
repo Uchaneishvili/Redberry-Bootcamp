@@ -304,7 +304,7 @@ function LaptopSpecs() {
               </Form.Item>
             </Form>
 
-            <div className="buttons-container">
+            <div className="footer-buttons-container">
               <Button
                 className="back-button"
                 onClick={() => window.history.back()}
