@@ -62,7 +62,12 @@ function LaptopSpecs() {
       <div className="parent-container">
         <div className="tab-container">
           <div className="arrow-vector-container">
-            <img src={arrow} alt="back" onClick={() => window.history.back()} />
+            <img
+              src={arrow}
+              alt="back"
+              className="mobile-back-arrow-header"
+              onClick={() => window.history.back()}
+            />
           </div>
           <div className="tab-title">
             <h5 className="bold-title">ლეპტოპის ინფო</h5>
@@ -116,7 +121,6 @@ function LaptopSpecs() {
                   />
                 </div>
               </Form.Item>
-              {/* <div className="fields-in-a-row-container"> */}
               <Row className="row">
                 <Form.Item
                   name={"laptopName"}

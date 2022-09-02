@@ -1,0 +1,101 @@
+@media only screen and (max-width: 391px) {
+  .card-container {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 100% !important;
+    height: 120px !important;
+  }
+  .parent-inner-container {
+    padding: 10px 15px !important;
+    display: block !important;
+  }
+
+  .web-back-arrow {
+    display: none;
+  }
+  .mobile-back-arrow {
+    display: block !important;
+    cursor: pointer;
+  }
+}
+
+.mobile-back-arrow {
+  display: none;
+}
+
+.web-back-arrow {
+  cursor: pointer;
+}
+body {
+  background-color: #f7f7f7;
+}
+
+.parent-container {
+  width: 100%;
+  height: 100%;
+}
+
+.parent-inner-container {
+  padding-top: 5%;
+  grid-column-gap: 50px;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-row-gap: 50px;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+}
+
+.card-container {
+  background-color: #eafaff;
+  border: 1px solid #aed1ea;
+  border-radius: 10px;
+  width: 560px;
+  height: 200px;
+}
+
+.card-inner-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 7px;
+  width: 100%;
+  height: 100%;
+}
+
+.card-image {
+  height: 100%;
+  width: 100%;
+}
+.card-info-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+.name-info {
+  color: #2e2e2e;
+  font-size: 14px;
+  font-style: Medium;
+  font-family: "HelveticaNeue";
+  font-weight: 600;
+}
+
+.cpu-info {
+  color: #2e2e2e;
+  font-size: 16px;
+  font-style: Medium;
+  font-family: "HelveticaNeue";
+}
+.list-tab-container {
+  overflow: hidden;
+  background-color: #f7f7f7;
+  padding: 30px 20px 0 20px;
+  display: flex !important;
+  flex-direction: row;
+  justify-content: space-between;
+}

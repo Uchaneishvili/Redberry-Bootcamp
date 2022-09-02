@@ -40,6 +40,10 @@ h5 {
   width: 60%;
 }
 
+.back-arrow-image {
+  cursor: pointer;
+}
+
 .employee-tab-divider {
   background-color: #000000;
   text-align: center;
