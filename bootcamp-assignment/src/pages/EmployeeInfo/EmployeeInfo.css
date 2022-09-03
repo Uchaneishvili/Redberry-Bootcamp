@@ -94,7 +94,7 @@
 
 .firstName,
 .lastName {
-  width: 25vw !important;
+  min-width: 25vw !important;
 }
 .custom-select {
   background-color: #ebebeb;

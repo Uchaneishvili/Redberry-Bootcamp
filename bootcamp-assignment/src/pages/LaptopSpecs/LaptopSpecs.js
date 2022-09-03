@@ -9,6 +9,7 @@ import {
   Radio,
   DatePicker,
 } from "antd";
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import "./LaptopSpecs.css";
 import Footer from "./Footer-logo.svg";
@@ -22,6 +23,8 @@ function LaptopSpecs() {
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
+  const [brands, setBrands] = useState([]);
+  const [cpus, setCpus] = useState([]);
   const [error, setError] = useState(false);
   const validate = async () => {
     try {
@@ -57,6 +60,26 @@ function LaptopSpecs() {
     setSelectedFile(e.target.files[0]);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const brands = await axios.get(
+          "https://pcfy.redberryinternship.ge/api/brands"
+        );
+
+        const cpus = await axios.get(
+          "https://pcfy.redberryinternship.ge/api/cpus"
+        );
+
+        setBrands(brands.data.data);
+        setCpus(cpus.data.data);
+      } catch (err) {
+        console.error("data cannot be loaded", err);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <div className="parent-container">
@@ -155,16 +178,15 @@ function LaptopSpecs() {
                       },
                     ]}
                   >
-                    <Option value={1}>დეველოპმენტი</Option>
-                    <Option value={2}>HR</Option>
-                    <Option value={3}>გაყიდვები</Option>
-                    <Option value={4}>დიზაინი</Option>
-                    <Option value={5}>მარკეტინგი</Option>
+                    {brands.map((brand) => (
+                      <Option value={brand.id} key={brand.id}>
+                        {brand.name}
+                      </Option>
+                    ))}
                   </Select>
                 </Form.Item>
               </Row>
 
-              {/* </div> */}
               <div className="divider-container">
                 <Divider
                   style={{
@@ -191,11 +213,11 @@ function LaptopSpecs() {
                     bordered={false}
                     placeholder="CPU"
                   >
-                    <Option value={1}>დეველოპმენტი</Option>
-                    <Option value={2}>HR</Option>
-                    <Option value={3}>გაყიდვები</Option>
-                    <Option value={4}>დიზაინი</Option>
-                    <Option value={5}>მარკეტინგი</Option>
+                    {cpus.map((cpu) => (
+                      <Option value={cpu.id} key={cpu.id}>
+                        {cpu.name}
+                      </Option>
+                    ))}
                   </Select>
                 </Form.Item>
                 <Form.Item name="cpu-core" label={"CPU-ს ბირთვი"}>

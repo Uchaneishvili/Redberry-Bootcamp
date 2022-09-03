@@ -1,15 +1,39 @@
 import { Form, Input, Select, Button } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./EmployeeInfo.css";
 import arrow from "./Vector.svg";
 import Footer from "./Footer-logo.svg";
 import { useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
+import axios from "axios";
 
 function EmployeeInfo() {
   const { Option } = Select;
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const [teams, setTeams] = useState([]);
+  const [positions, setPosition] = useState([]);
+  const [currentTeam, setCurrentTeam] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const teams = await axios.get(
+          "https://pcfy.redberryinternship.ge/api/teams"
+        );
+        const positions = await axios.get(
+          "https://pcfy.redberryinternship.ge/api/positions"
+        );
+
+        setTeams(teams.data.data);
+        setPosition(positions.data.data);
+      } catch (err) {
+        console.error("data cannot be loaded", err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const validate = async () => {
     try {
@@ -19,6 +43,7 @@ function EmployeeInfo() {
       console.log(err);
     }
   };
+
   return (
     <>
       <div className="parent-container">
@@ -90,12 +115,13 @@ function EmployeeInfo() {
                   className="custom-select"
                   bordered={false}
                   placeholder={"თიმი"}
+                  onChange={(e) => setCurrentTeam(e)}
                 >
-                  <Option value={1}>დეველოპმენტი</Option>
-                  <Option value={2}>HR</Option>
-                  <Option value={3}>გაყიდვები</Option>
-                  <Option value={4}>დიზაინი</Option>
-                  <Option value={5}>მარკეტინგი</Option>
+                  {teams.map((team) => (
+                    <Option value={team.id} key={team.id}>
+                      {team.name}
+                    </Option>
+                  ))}
                 </Select>
               </Form.Item>
               <Form.Item
@@ -110,9 +136,16 @@ function EmployeeInfo() {
                 <Select
                   className="custom-select"
                   bordered={false}
-                  placeholder={"თიმი"}
+                  placeholder={"პოზიცია"}
                 >
-                  <Option value={1}>Hello</Option>
+                  {positions.map(
+                    (position) =>
+                      position.team_id === currentTeam && (
+                        <Option value={position.id} key={position.id}>
+                          {position.name}
+                        </Option>
+                      )
+                  )}
                 </Select>
               </Form.Item>
               <Form.Item

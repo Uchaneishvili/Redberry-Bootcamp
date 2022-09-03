@@ -14,8 +14,8 @@ function Header() {
   };
 
   return (
-    <div class="head-container">
-      <div class="head-inner-container">
+    <div className="head-container">
+      <div className="head-inner-container">
         <img src={Arrow} className="back-arrow-image" alt="arrow" />
       </div>
       <Tabs
