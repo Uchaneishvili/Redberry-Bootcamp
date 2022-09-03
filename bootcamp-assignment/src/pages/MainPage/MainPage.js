@@ -24,7 +24,7 @@ function MainPage() {
             <Button
               className="main-button add-button"
               type="primary"
-              onClick={() => navigete(`/employeeInfo`)}
+              onClick={() => navigete(`/create`)}
             >
               ᲩᲐᲜᲐᲬᲔᲠᲘᲡ ᲓᲐᲛᲐᲢᲔᲑᲐ
             </Button>
