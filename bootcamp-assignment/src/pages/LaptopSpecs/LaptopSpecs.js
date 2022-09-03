@@ -26,13 +26,24 @@ function LaptopSpecs() {
   const [brands, setBrands] = useState([]);
   const [cpus, setCpus] = useState([]);
   const [error, setError] = useState(false);
+
   const validate = async () => {
     try {
-      await form.validateFields();
-      navigate("/laptopSpecs");
+      const config = {
+        body: {
+          token: `f39fea4fddada8a3a344125f8f9b6907`,
+        },
+      };
+      const data = await form.validateFields();
+
+      await axios.post(
+        "https://pcfy.redberryinternship.ge/api/laptop/create",
+        data,
+        config
+      );
     } catch (err) {
       setError(true);
-      console.log(err);
+      console.log("laptop cannot be added ", err);
     }
   };
 

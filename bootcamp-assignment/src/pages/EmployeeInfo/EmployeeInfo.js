@@ -40,7 +40,7 @@ function EmployeeInfo() {
       await form.validateFields();
       navigate("/laptopSpecs");
     } catch (err) {
-      console.log(err);
+      console.log("validation error", err);
     }
   };
 
