@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/Redberry-Bootcamp/static/css/main.2e97c715.css",
+    "main.js": "/Redberry-Bootcamp/static/js/main.6abd9fab.js",
+    "static/js/787.1b9aa614.chunk.js": "/Redberry-Bootcamp/static/js/787.1b9aa614.chunk.js",
+    "static/media/HelveticaNeue.ttc": "/Redberry-Bootcamp/static/media/HelveticaNeue.67d426c3bd180e2ea838.ttc",
+    "static/media/Main-photo-web.svg": "/Redberry-Bootcamp/static/media/Main-photo-web.cddad235c0b437a631e86124746aa5f2.svg",
+    "static/media/Footer-logo.svg": "/Redberry-Bootcamp/static/media/Footer-logo.e21412c42a10f0b389edd7ed18f056bd.svg",
+    "static/media/Redberry_Title.svg": "/Redberry-Bootcamp/static/media/Redberry_Title.e6f60e00f6779dbb2e331d4420e01388.svg",
+    "static/media/PC.svg": "/Redberry-Bootcamp/static/media/PC.530b810ff88ae2c16068f485b9084955.svg",
+    "static/media/Frame.svg": "/Redberry-Bootcamp/static/media/Frame.572a3ee7e04a651228638370aa29024f.svg",
+    "static/media/Rectangle_4.png": "/Redberry-Bootcamp/static/media/Rectangle_4.bad7f6f6dbb4f3bff1ae.png",
+    "index.html": "/Redberry-Bootcamp/index.html",
+    "static/media/web-arrow.svg": "/Redberry-Bootcamp/static/media/web-arrow.d90c0d0b381b790ea11c862f5dad5511.svg",
+    "static/media/Vector.svg": "/Redberry-Bootcamp/static/media/Vector.8f641456eaa8f2d10ec4e453082cc372.svg",
+    "static/media/Camera_Vector.svg": "/Redberry-Bootcamp/static/media/Camera_Vector.8e68c5c1883f3ac2866957ab897b122b.svg",
+    "main.2e97c715.css.map": "/Redberry-Bootcamp/static/css/main.2e97c715.css.map",
+    "main.6abd9fab.js.map": "/Redberry-Bootcamp/static/js/main.6abd9fab.js.map",
+    "787.1b9aa614.chunk.js.map": "/Redberry-Bootcamp/static/js/787.1b9aa614.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2e97c715.css",
+    "static/js/main.6abd9fab.js"
+  ]
+}
