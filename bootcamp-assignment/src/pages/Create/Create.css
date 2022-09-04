@@ -3,3 +3,33 @@
     display: none !important;
   }
 }
+
+.ant-modal-body {
+  text-align: center;
+}
+.modal-title {
+  font-weight: 700;
+  font-size: 25px;
+}
+
+.ant-modal-content {
+  border-radius: 8px;
+}
+
+.modal-button {
+  color: white;
+  width: 300px;
+}
+
+.transparent-button {
+  background-color: transparent;
+  border: none;
+  color: #0089a7;
+  box-shadow: none;
+  font-size: 20px;
+}
+
+.transparent-button-container,
+.modal-button-container {
+  padding: 14px;
+}

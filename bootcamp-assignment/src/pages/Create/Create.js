@@ -6,9 +6,12 @@ import arrow from "./Vector.svg";
 import "./Create.css";
 import "../Header/Header.css";
 import "../LaptopSpecs/LaptopSpecs.css";
+import { useNavigate } from "react-router-dom";
 import "../EmployeeInfo/EmployeeInfo.css";
 import Footer from "./Footer-logo.svg";
+import Success from "./Frame.svg";
 import axios from "axios";
+import FormData from "form-data";
 import {
   Form,
   Input,
@@ -19,6 +22,7 @@ import {
   Row,
   Radio,
   DatePicker,
+  Modal,
 } from "antd";
 import Camera from "./Camera_Vector.svg";
 
@@ -38,12 +42,16 @@ function Create() {
   const [currentTeam, setCurrentTeam] = useState();
   const [width, setWidth] = useState(window.innerWidth);
   const [isActiveTab, setIsActiveTab] = useState(0);
+  const [isModal, setIsModal] = useState(false);
+  let formData = new FormData();
+  const navigate = useNavigate();
 
   const isMobile = width <= 391;
 
   function handleWindowSizeChange() {
     setWidth(window.innerWidth);
   }
+
   useEffect(() => {
     window.addEventListener("resize", handleWindowSizeChange);
     return () => {
@@ -53,23 +61,32 @@ function Create() {
 
   const validateFullForm = async () => {
     try {
-      const employeeData = await employeeForm.validateFields();
-      const laptopData = await laptopForm.validateFields();
+      formData.append("laptop_image", selectedFile);
 
-      const value = {
+      const config = {
+        headers: { "content-type": "multipart/form-data" },
+      };
+
+      const laptopData = await laptopForm
+        .validateFields()
+        .catch(setError(true));
+      const employeeData = await employeeForm.validateFields();
+
+      var values = {
         ...employeeData,
         ...laptopData,
+        laptop_image: [...formData][0][1],
         phone_number: `+995${employeeData.phone_number}`,
         token: `f39fea4fddada8a3a344125f8f9b6907`,
       };
 
       await axios.post(
         "https://pcfy.redberryinternship.ge/api/laptop/create",
-        value
+        values,
+        config
       );
     } catch (err) {
       console.log("laptop cannot be added ", err);
-      setError(true);
     }
   };
 
@@ -90,6 +107,7 @@ function Create() {
   const onSelectFile = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedFile(undefined);
+
       return;
     }
 
@@ -129,7 +147,8 @@ function Create() {
 
   const validateEmployeeForm = async () => {
     try {
-      await employeeForm.validateFields().then(() => setIsActiveTab(1));
+      await employeeForm.validateFields();
+      changeTab(1);
     } catch (err) {
       console.log("validation error", err);
     }
@@ -151,43 +170,469 @@ function Create() {
   };
 
   return (
-    <div className="outter-container">
-      <div className="head-inner-container">
-        <img src={Arrow} className="back-arrow-image" alt="arrow" />
-      </div>
+    <>
+      <div className="outter-container">
+        <div className="head-inner-container">
+          <img src={Arrow} className="back-arrow-image" alt="arrow" />
+        </div>
 
-      <div className="tab-container">
-        <div className="arrow-vector-container">
-          <img
-            src={arrow}
-            alt="back"
-            onClick={
-              isActiveTab === 0
-                ? () => window.history.back()
-                : setIsActiveTab(0)
-            }
-          />
+        <div className="tab-container">
+          <div className="arrow-vector-container">
+            <img
+              src={arrow}
+              alt="back"
+              onClick={
+                isActiveTab === 0
+                  ? () => window.history.back()
+                  : setIsActiveTab(0)
+              }
+            />
+          </div>
+          <div className="tab-title">
+            <h5 className="bold-title">
+              {isActiveTab === 0 ? "თანამშრომლის ინფო" : "ლეპტოპის ინფო"}
+            </h5>
+            <p className="page">{isActiveTab === 0 ? "1/2" : "2/2"}</p>
+          </div>
+          <div />
         </div>
-        <div className="tab-title">
-          <h5 className="bold-title">
-            {isActiveTab === 0 ? "თანამშრომლის ინფო" : "ლეპტოპის ინფო"}
-          </h5>
-          <p className="page">{isActiveTab === 0 ? "1/2" : "2/2"}</p>
-        </div>
-        <div />
-      </div>
-      <Tabs
-        type="line"
-        centered
-        defaultActiveKey={0}
-        onChange={async (e) => {
-          changeTab(e);
-        }}
-      >
-        <TabPane tab="თანამშრომლის ინფო" key={0}>
-          <div className="parent-container">
-            <div className="main-container-container">
-              {isActiveTab === 1 && isMobile ? (
+        <Tabs
+          type="line"
+          centered
+          defaultActiveKey={0}
+          onChange={async (e) => {
+            changeTab(e);
+          }}
+        >
+          <TabPane tab="თანამშრომლის ინფო" key={0}>
+            <div className="parent-container">
+              <div className="main-container-container">
+                {isActiveTab === 1 && isMobile ? (
+                  <div className="main-employee-container">
+                    <Form layout={"vertical"} form={laptopForm}>
+                      <Form.Item
+                        name="laptop_image"
+                        rules={[
+                          {
+                            message: "ველის შევსება სავალდებულოა",
+                            required: true,
+                          },
+                        ]}
+                      >
+                        <div
+                          className={
+                            error ? "image-uploader-error" : "image-uploader"
+                          }
+                        >
+                          <label
+                            htmlFor="file-input"
+                            className="camera-container"
+                          >
+                            <img
+                              src={selectedFile ? preview : Camera}
+                              alt="camera"
+                              style={{
+                                width: selectedFile ? "100%" : "45px",
+                                height: selectedFile ? "100%" : "45px",
+                                borderRadius: selectedFile ? "8px" : "0",
+                              }}
+                            />
+
+                            {!selectedFile && (
+                              <span className="hint-container">
+                                ლეპტოპის ფოტოს ატვირთვა
+                              </span>
+                            )}
+                          </label>
+                          <Input
+                            type="file"
+                            id="file-input"
+                            style={{ display: "none" }}
+                            accept={".jpg, .jpeg, .png"}
+                            onChange={onSelectFile}
+                          />
+                        </div>
+                      </Form.Item>
+                      <Row className="row">
+                        <Form.Item
+                          name={"laptop_name"}
+                          label={"ლეპტოპის სახელი"}
+                          rules={[
+                            {
+                              message: "ველის შევსება სავალდებულოა",
+                              required: true,
+                            },
+                          ]}
+                        >
+                          <Input className="custom-input laptop-name" />
+                        </Form.Item>
+
+                        <Form.Item
+                          name="laptop_brand_id"
+                          rules={[
+                            {
+                              message: "ველის შევსება სავალდებულოა",
+                              required: true,
+                            },
+                          ]}
+                        >
+                          <Select
+                            className="custom-select brand"
+                            bordered={false}
+                            placeholder="ლეპტოპის ბრენდი"
+                            rules={[
+                              {
+                                message: "ველის შევსება სავალდებულოა",
+                                required: true,
+                              },
+                            ]}
+                          >
+                            {brands.map((brand) => (
+                              <Option value={brand.id} key={brand.id}>
+                                {brand.name}
+                              </Option>
+                            ))}
+                          </Select>
+                        </Form.Item>
+                      </Row>
+
+                      <div className="divider-container">
+                        <Divider
+                          style={{
+                            color: "#C7C7C7",
+                            borderColor: "#C7C7C7",
+                            marginTop: "40px",
+                            marginBottom: "40px",
+                          }}
+                        />
+                      </div>
+
+                      <Row className="row">
+                        <Form.Item
+                          name="laptop_cpu"
+                          rules={[
+                            {
+                              message: "ველის შევსება სავალდებულოა",
+                              required: true,
+                            },
+                          ]}
+                        >
+                          <Select
+                            className="custom-select cpu"
+                            bordered={false}
+                            placeholder="CPU"
+                          >
+                            {cpus.map((cpu) => (
+                              <Option value={cpu.name} key={cpu.id}>
+                                {cpu.name}
+                              </Option>
+                            ))}
+                          </Select>
+                        </Form.Item>
+                        <Form.Item
+                          name="laptop_cpu_cores"
+                          label={"CPU-ს ბირთვი"}
+                        >
+                          <Input
+                            type={"number"}
+                            min={0}
+                            className="custom-input cpu"
+                          />
+                        </Form.Item>
+                        <Form.Item
+                          name="laptop_cpu_threads"
+                          label={"CPU-ს ნაკადი"}
+                        >
+                          <Input
+                            type={"number"}
+                            min={0}
+                            className="custom-input cpu"
+                          />
+                        </Form.Item>
+                      </Row>
+
+                      <Row className="row flexTop">
+                        <Form.Item
+                          name="laptop_ram"
+                          label={"ლეპტოპის RAM (GB)"}
+                        >
+                          <Input
+                            type={"number"}
+                            min={0}
+                            className="custom-input ram"
+                          />
+                        </Form.Item>
+                        <Form.Item
+                          name="laptop_hard_drive_type"
+                          label={"მეხსიერების ტიპი"}
+                          rules={[
+                            {
+                              required: true,
+                              message: "ველი სავალდებულოა",
+                            },
+                          ]}
+                        >
+                          <Radio.Group style={{ width: 200 }}>
+                            <Row gutter={60}>
+                              <Col span={12}>
+                                <Radio
+                                  style={{ fontWeight: 400 }}
+                                  value={"SSD"}
+                                >
+                                  SSD
+                                </Radio>
+                              </Col>
+                              <Col span={12}>
+                                <Radio
+                                  style={{ fontWeight: 400 }}
+                                  value={"HDD"}
+                                >
+                                  HDD
+                                </Radio>
+                              </Col>
+                            </Row>
+                          </Radio.Group>
+                        </Form.Item>
+
+                        <div></div>
+                      </Row>
+
+                      <div className="divider-container">
+                        <Divider
+                          style={{
+                            color: "#C7C7C7",
+                            borderColor: "#C7C7C7",
+                            marginTop: "40px",
+                            marginBottom: "40px",
+                          }}
+                        />
+                      </div>
+
+                      <Row className="row">
+                        <Form.Item
+                          name="laptop_purchase_date"
+                          label={"შეძენის რიცხვი (არჩევითი)"}
+                        >
+                          <DatePicker
+                            className="custom-input date"
+                            placeholder="დდ / თთ / წწ"
+                            format={"DD/MM/YYYY"}
+                          />
+                        </Form.Item>
+                        <Form.Item
+                          name="laptop_price"
+                          label={"ლეპტოპის ფასი"}
+                          rules={[
+                            {
+                              required: true,
+                              message: "მდგომარეობის არჩევა სავალდებულოა",
+                            },
+                          ]}
+                        >
+                          <Input
+                            type={"number"}
+                            className="custom-input price"
+                            min={0}
+                            suffix={"₾"}
+                          />
+                        </Form.Item>
+                      </Row>
+
+                      <Form.Item
+                        name="laptop_state"
+                        label={"მდგომარეობა"}
+                        rules={[
+                          {
+                            required: true,
+                            message: "მდგომარეობის არჩევა სავალდებულოა",
+                          },
+                        ]}
+                      >
+                        <Radio.Group style={{ minWidth: 200 }}>
+                          <Row gutter={60}>
+                            <Col span={12}>
+                              <Radio style={{ fontWeight: 400 }} value={"new"}>
+                                ახალი
+                              </Radio>
+                            </Col>
+                            <Col span={12}>
+                              <Radio style={{ fontWeight: 400 }} value={"used"}>
+                                მეორადი
+                              </Radio>
+                            </Col>
+                          </Row>
+                        </Radio.Group>
+                      </Form.Item>
+                    </Form>
+
+                    <div className="footer-buttons-container">
+                      <Button
+                        className="back-button"
+                        onClick={() => setIsActiveTab(0)}
+                      >
+                        უკან
+                      </Button>
+                      <Button
+                        className="next-button"
+                        onClick={() => validateFullForm()}
+                      >
+                        შემდეგი
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="main-employee-container">
+                    <Form layout={"vertical"} form={employeeForm}>
+                      <div className="fullName-container">
+                        <Form.Item
+                          name={"name"}
+                          label={"სახელი"}
+                          rules={[
+                            {
+                              message: "ველის შევსება სავალდებულოა",
+                              required: true,
+                            },
+                            {
+                              message: "შეიყვანეთ მხოლოდ ქართული სიმბოლოები",
+                              pattern: "^[ა-ჰ]+$",
+                            },
+                            { message: "შეიყვანეთ მინიმუმ 2 სიმბოლო", min: 2 },
+                          ]}
+                        >
+                          <Input className="custom-input firstName" />
+                        </Form.Item>
+                        <Form.Item
+                          name={"surname"}
+                          label={"გვარი"}
+                          rules={[
+                            {
+                              message: "ველის შევსება სავალდებულოა",
+                              required: true,
+                            },
+                            {
+                              message: "შეიყვანეთ მხოლოდ ქართული სიმბოლოები",
+                              pattern: "^[ა-ჰ]+$",
+                            },
+                            { message: "შეიყვანეთ მინიმუმ 2 სიმბოლო", min: 2 },
+                          ]}
+                        >
+                          <Input className="custom-input lastName" />
+                        </Form.Item>
+                      </div>
+
+                      <Form.Item
+                        name="team_id"
+                        rules={[
+                          {
+                            message: "ველის შევსება სავალდებულოა",
+                            required: true,
+                          },
+                        ]}
+                      >
+                        <Select
+                          className="custom-select"
+                          bordered={false}
+                          placeholder={"თიმი"}
+                          onChange={(e) => setCurrentTeam(e)}
+                        >
+                          {teams.map((team) => (
+                            <Option value={team.id} key={team.id}>
+                              {team.name}
+                            </Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                      <Form.Item
+                        name="position_id"
+                        rules={[
+                          {
+                            message: "ველის შევსება სავალდებულოა",
+                            required: true,
+                          },
+                        ]}
+                      >
+                        <Select
+                          className="custom-select"
+                          bordered={false}
+                          placeholder={"პოზიცია"}
+                        >
+                          {positions.map(
+                            (position) =>
+                              position.team_id === currentTeam && (
+                                <Option value={position.id} key={position.id}>
+                                  {position.name}
+                                </Option>
+                              )
+                          )}
+                        </Select>
+                      </Form.Item>
+                      <Form.Item
+                        label={"მეილი"}
+                        name={"email"}
+                        rules={[
+                          {
+                            message: "ველის შევსება სავალდებულოა",
+                            required: true,
+                          },
+                          {
+                            message: "მეილი უნდა მთავრდებოდეს @redberry.ge-ით",
+                            pattern: ".+@redberry.ge",
+                          },
+                          {
+                            message: "გთხოვთ გამოიყენეთ ინგლისური სიმბოლოები",
+                            pattern: /^[a-zA-Z0-9!@#$%^&*()_+.=]*$/,
+                          },
+                        ]}
+                      >
+                        <Input className="custom-input" />
+                      </Form.Item>
+                      <Form.Item
+                        name={"phone_number"}
+                        label={"ტელეფონის ნომერი"}
+                        rules={[
+                          {
+                            message: "ველის შევსება სავალდებულოა",
+                            required: true,
+                          },
+                          { message: "შეიყვანეთ 9 სიმბოლო", min: 9, max: 9 },
+                          {
+                            message: "ტელეფონის ნომერი უნდა იწყებოდეს 5 ით",
+                            pattern: "^[5]*",
+                          },
+                        ]}
+                      >
+                        <Input
+                          type={"number"}
+                          className="custom-input"
+                          prefix={"+995"}
+                        />
+                      </Form.Item>
+                    </Form>
+
+                    <div className="next-button-container">
+                      <Button
+                        className="next-button"
+                        onClick={() => {
+                          validateEmployeeForm();
+                          changeTab(1);
+                        }}
+                      >
+                        შემდეგი
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="footer-logo-container">
+                <img src={Footer} alt="footer-redberry-icon" />
+              </div>
+            </div>
+          </TabPane>
+
+          <TabPane tab="ლეპტოპის ინფო" key={1}>
+            <div className="parent-container">
+              <div className="main-container-container">
                 <div className="main-employee-container">
                   <Form layout={"vertical"} form={laptopForm}>
                     <Form.Item
@@ -242,6 +687,10 @@ function Create() {
                           {
                             message: "ველის შევსება სავალდებულოა",
                             required: true,
+                          },
+                          {
+                            message: "გთხოვთ გამოიყენოთ ინგლისური ასოები",
+                            pattern: /^[a-zA-Z0-9!@#$%^&*()_+=]*$/,
                           },
                         ]}
                       >
@@ -449,413 +898,41 @@ function Create() {
                     </Button>
                   </div>
                 </div>
-              ) : (
-                <div className="main-employee-container">
-                  <Form layout={"vertical"} form={employeeForm}>
-                    <div className="fullName-container">
-                      <Form.Item
-                        name={"name"}
-                        label={"სახელი"}
-                        rules={[
-                          {
-                            message: "ველის შევსება სავალდებულოა",
-                            required: true,
-                          },
-                          {
-                            message: "შეიყვანეთ მხოლოდ ქართული სიმბოლოები",
-                            pattern: "^[ა-ჰ]+$",
-                          },
-                          { message: "შეიყვანეთ მინიმუმ 2 სიმბოლო", min: 2 },
-                        ]}
-                      >
-                        <Input className="custom-input firstName" />
-                      </Form.Item>
-                      <Form.Item
-                        name={"surname"}
-                        label={"გვარი"}
-                        rules={[
-                          {
-                            message: "ველის შევსება სავალდებულოა",
-                            required: true,
-                          },
-                          {
-                            message: "შეიყვანეთ მხოლოდ ქართული სიმბოლოები",
-                            pattern: "^[ა-ჰ]+$",
-                          },
-                          { message: "შეიყვანეთ მინიმუმ 2 სიმბოლო", min: 2 },
-                        ]}
-                      >
-                        <Input className="custom-input lastName" />
-                      </Form.Item>
-                    </div>
-
-                    <Form.Item
-                      name="team_id"
-                      rules={[
-                        {
-                          message: "ველის შევსება სავალდებულოა",
-                          required: true,
-                        },
-                      ]}
-                    >
-                      <Select
-                        className="custom-select"
-                        bordered={false}
-                        placeholder={"თიმი"}
-                        onChange={(e) => setCurrentTeam(e)}
-                      >
-                        {teams.map((team) => (
-                          <Option value={team.id} key={team.id}>
-                            {team.name}
-                          </Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                    <Form.Item
-                      name="position_id"
-                      rules={[
-                        {
-                          message: "ველის შევსება სავალდებულოა",
-                          required: true,
-                        },
-                      ]}
-                    >
-                      <Select
-                        className="custom-select"
-                        bordered={false}
-                        placeholder={"პოზიცია"}
-                      >
-                        {positions.map(
-                          (position) =>
-                            position.team_id === currentTeam && (
-                              <Option value={position.id} key={position.id}>
-                                {position.name}
-                              </Option>
-                            )
-                        )}
-                      </Select>
-                    </Form.Item>
-                    <Form.Item
-                      label={"მეილი"}
-                      name={"email"}
-                      rules={[
-                        {
-                          message: "ველის შევსება სავალდებულოა",
-                          required: true,
-                        },
-                      ]}
-                    >
-                      <Input className="custom-input" />
-                    </Form.Item>
-                    <Form.Item
-                      name={"phone_number"}
-                      label={"ტელეფონის ნომერი"}
-                      rules={[
-                        {
-                          message: "ველის შევსება სავალდებულოა",
-                          required: true,
-                        },
-                        { message: "შეიყვანეთ 9 სიმბოლო", min: 9, max: 9 },
-                        {
-                          message: "ტელეფონის ნომერი უნდა იწყებოდეს 5 ით",
-                          pattern: "^[5].*",
-                        },
-                      ]}
-                    >
-                      <Input
-                        type={"number"}
-                        className="custom-input"
-                        prefix={"+995"}
-                      />
-                    </Form.Item>
-                  </Form>
-
-                  <div className="next-button-container">
-                    <Button
-                      className="next-button"
-                      onClick={() => validateEmployeeForm()}
-                    >
-                      შემდეგი
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="footer-logo-container">
-              <img src={Footer} alt="footer-redberry-icon" />
-            </div>
-          </div>
-        </TabPane>
-
-        <TabPane tab="ლეპტოპის ინფო" key={1}>
-          <div className="parent-container">
-            <div className="main-container-container">
-              <div className="main-employee-container">
-                <Form layout={"vertical"} form={laptopForm}>
-                  <Form.Item
-                    name={"laptop_image"}
-                    label={"ლეპტოპის სახელი"}
-                    rules={[
-                      {
-                        message: "ველის შევსება სავალდებულოა",
-                        required: true,
-                      },
-                    ]}
-                  >
-                    <div
-                      className={
-                        error ? "image-uploader-error" : "image-uploader"
-                      }
-                    >
-                      <label htmlFor="file-input" className="camera-container">
-                        <img
-                          src={selectedFile ? preview : Camera}
-                          alt="camera"
-                          style={{
-                            width: selectedFile ? "100%" : "45px",
-                            height: selectedFile ? "100%" : "45px",
-                            borderRadius: selectedFile ? "8px" : "0",
-                          }}
-                        />
-
-                        {!selectedFile && (
-                          <span className="hint-container">
-                            ლეპტოპის ფოტოს ატვირთვა
-                          </span>
-                        )}
-                      </label>
-                      <Input
-                        type="file"
-                        id="file-input"
-                        style={{ display: "none" }}
-                        accept={".jpg, .jpeg, .png"}
-                        onChange={onSelectFile}
-                      />
-                    </div>
-                  </Form.Item>
-                  <Row className="row">
-                    <Form.Item
-                      name={"laptop_name"}
-                      label={"ლეპტოპის სახელი"}
-                      rules={[
-                        {
-                          message: "ველის შევსება სავალდებულოა",
-                          required: true,
-                        },
-                      ]}
-                    >
-                      <Input className="custom-input laptop-name" />
-                    </Form.Item>
-
-                    <Form.Item
-                      name="laptop_brand_id"
-                      rules={[
-                        {
-                          message: "ველის შევსება სავალდებულოა",
-                          required: true,
-                        },
-                      ]}
-                    >
-                      <Select
-                        className="custom-select brand"
-                        bordered={false}
-                        placeholder="ლეპტოპის ბრენდი"
-                        rules={[
-                          {
-                            message: "ველის შევსება სავალდებულოა",
-                            required: true,
-                          },
-                        ]}
-                      >
-                        {brands.map((brand) => (
-                          <Option value={brand.id} key={brand.id}>
-                            {brand.name}
-                          </Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                  </Row>
-
-                  <div className="divider-container">
-                    <Divider
-                      style={{
-                        color: "#C7C7C7",
-                        borderColor: "#C7C7C7",
-                        marginTop: "40px",
-                        marginBottom: "40px",
-                      }}
-                    />
-                  </div>
-
-                  <Row className="row">
-                    <Form.Item
-                      name="laptop_cpu"
-                      rules={[
-                        {
-                          message: "ველის შევსება სავალდებულოა",
-                          required: true,
-                        },
-                      ]}
-                    >
-                      <Select
-                        className="custom-select cpu"
-                        bordered={false}
-                        placeholder="CPU"
-                      >
-                        {cpus.map((cpu) => (
-                          <Option value={cpu.name} key={cpu.id}>
-                            {cpu.name}
-                          </Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                    <Form.Item name="laptop_cpu_cores" label={"CPU-ს ბირთვი"}>
-                      <Input
-                        type={"number"}
-                        min={0}
-                        className="custom-input cpu"
-                      />
-                    </Form.Item>
-                    <Form.Item name="laptop_cpu_threads" label={"CPU-ს ნაკადი"}>
-                      <Input
-                        type={"number"}
-                        min={0}
-                        className="custom-input cpu"
-                      />
-                    </Form.Item>
-                  </Row>
-
-                  <Row className="row flexTop">
-                    <Form.Item name="laptop_ram" label={"ლეპტოპის RAM (GB)"}>
-                      <Input
-                        type={"number"}
-                        min={0}
-                        className="custom-input ram"
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      name="laptop_hard_drive_type"
-                      label={"მეხსიერების ტიპი"}
-                      rules={[
-                        {
-                          required: true,
-                          message: "ველი სავალდებულოა",
-                        },
-                      ]}
-                    >
-                      <Radio.Group style={{ width: 200 }}>
-                        <Row gutter={60}>
-                          <Col span={12}>
-                            <Radio style={{ fontWeight: 400 }} value={"SSD"}>
-                              SSD
-                            </Radio>
-                          </Col>
-                          <Col span={12}>
-                            <Radio style={{ fontWeight: 400 }} value={"HDD"}>
-                              HDD
-                            </Radio>
-                          </Col>
-                        </Row>
-                      </Radio.Group>
-                    </Form.Item>
-
-                    <div></div>
-                  </Row>
-
-                  <div className="divider-container">
-                    <Divider
-                      style={{
-                        color: "#C7C7C7",
-                        borderColor: "#C7C7C7",
-                        marginTop: "40px",
-                        marginBottom: "40px",
-                      }}
-                    />
-                  </div>
-
-                  <Row className="row">
-                    <Form.Item
-                      name="laptop_purchase_date"
-                      label={"შეძენის რიცხვი (არჩევითი)"}
-                    >
-                      <DatePicker
-                        className="custom-input date"
-                        placeholder="დდ / თთ / წწ"
-                        format={"DD/MM/YYYY"}
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      name="laptop_price"
-                      label={"ლეპტოპის ფასი"}
-                      rules={[
-                        {
-                          required: true,
-                          message: "მდგომარეობის არჩევა სავალდებულოა",
-                        },
-                      ]}
-                    >
-                      <Input
-                        type={"number"}
-                        className="custom-input price"
-                        min={0}
-                        suffix={"₾"}
-                      />
-                    </Form.Item>
-                  </Row>
-
-                  <Form.Item
-                    name="laptop_state"
-                    label={"მდგომარეობა"}
-                    rules={[
-                      {
-                        required: true,
-                        message: "მდგომარეობის არჩევა სავალდებულოა",
-                      },
-                    ]}
-                  >
-                    <Radio.Group style={{ minWidth: 200 }}>
-                      <Row gutter={60}>
-                        <Col span={12}>
-                          <Radio style={{ fontWeight: 400 }} value={"new"}>
-                            ახალი
-                          </Radio>
-                        </Col>
-                        <Col span={12}>
-                          <Radio style={{ fontWeight: 400 }} value={"used"}>
-                            მეორადი
-                          </Radio>
-                        </Col>
-                      </Row>
-                    </Radio.Group>
-                  </Form.Item>
-                </Form>
-
-                <div className="footer-buttons-container">
-                  <Button
-                    className="back-button"
-                    onClick={() => setIsActiveTab(0)}
-                  >
-                    უკან
-                  </Button>
-                  <Button
-                    className="next-button"
-                    onClick={() => validateFullForm()}
-                  >
-                    შემდეგი
-                  </Button>
-                </div>
+              </div>
+              <div className="footer-logo-container">
+                <img src={Footer} alt="footer-redberry-icon" />
               </div>
             </div>
-            <div className="footer-logo-container">
-              <img src={Footer} alt="footer-redberry-icon" />
-            </div>
-          </div>
-        </TabPane>
-      </Tabs>
+          </TabPane>
+        </Tabs>
 
-      <div style={{ width: "53px" }}></div>
-    </div>
+        <div style={{ width: "53px" }}></div>
+      </div>
+
+      <div className="success-modal">
+        <Modal visible={false} footer={false} header={false} closable={false}>
+          <img src={Success} alt="success" />
+
+          <p className="modal-title">ჩანაწერი დამატებულია!</p>
+          <div className="modal-button-container">
+            <Button
+              className="main-button modal-button"
+              onClick={() => navigate("/list")}
+            >
+              სიაში გადაყვანა
+            </Button>
+          </div>
+          <div className="transparent-button-container">
+            <Button
+              className="transparent-button"
+              onClick={() => navigate("/")}
+            >
+              მთავარი
+            </Button>
+          </div>
+        </Modal>
+      </div>
+    </>
   );
 }
 
