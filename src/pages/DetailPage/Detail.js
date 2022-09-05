@@ -120,8 +120,6 @@ function Detail() {
     };
   }, []);
 
-  console.log(moment("Wed Sep 07 2022 19:42:39 GMT+0400").format("DD/MM/YYYY"));
-
   useEffect(() => {
     const fetchData = async () => {
       try {

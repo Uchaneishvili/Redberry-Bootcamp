@@ -30,7 +30,11 @@ function MainPage() {
             </Button>
           </div>
           <div className="main-button-container list-button-container">
-            <Button className="main-button list-button" type="primary">
+            <Button
+              className="main-button list-button"
+              type="primary"
+              onClick={() => navigete(`/list`)}
+            >
               ᲩᲐᲜᲐᲬᲔᲠᲔᲑᲘᲡ ᲡᲘᲐ
             </Button>
           </div>

@@ -28,7 +28,6 @@ function List() {
           "https://pcfy.redberryinternship.ge/api/laptops?token=f39fea4fddada8a3a344125f8f9b6907"
         );
 
-        console.log(data.data);
         setListData(data.data);
       } catch (err) {
         console.error("list cannot be loaded", err);

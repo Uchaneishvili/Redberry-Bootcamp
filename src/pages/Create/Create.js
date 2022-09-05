@@ -1,5 +1,4 @@
 import Arrow from "./web-arrow.svg";
-import { notification } from "antd";
 import { Tabs } from "antd";
 import React, { useEffect, useState } from "react";
 import arrow from "./Vector.svg";
@@ -144,19 +143,14 @@ function Create() {
     fetchData();
   }, []);
 
-  const changeTab = async (activeKey) => {
+  const changeTab = async () => {
     if (window.location.pathname === "/employeeInfo") {
       try {
         await employeeForm.validateFields();
         navigate("/laptopSpecs");
         setState("/laptopSpecs");
       } catch (err) {
-        if (activeKey === 1) {
-          notification.error({
-            message: "შეცდომა",
-            description: "გთხოვთ შეამოწმეთ თანაშმრომლის ინფოს ტაბი",
-          });
-        }
+        console.log("validation error", error);
       }
     } else if (window.location.pathname === "/laptopSpecs") {
       navigate("/employeeInfo");
