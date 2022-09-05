@@ -6,7 +6,6 @@
     height: 120px !important;
   }
   .parent-inner-container {
-    padding: 10px 15px !important;
     display: block !important;
   }
 
@@ -16,6 +15,12 @@
   .mobile-back-arrow {
     display: block !important;
     cursor: pointer;
+  }
+
+  .main-list-container {
+    width: 100% !important;
+    padding: 35px 15px !important;
+    background-color: #f7f7f7;
   }
 }
 

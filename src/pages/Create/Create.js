@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import arrow from "./Vector.svg";
 import "./Create.css";
 import { useNavigate } from "react-router-dom";
-import "../EmployeeInfo/EmployeeInfo.css";
 import Footer from "./Footer-logo.svg";
 import Success from "./Frame.svg";
 import axios from "axios";
@@ -66,9 +65,12 @@ function Create() {
         headers: { "content-type": "multipart/form-data" },
       };
 
-      const laptopData = await laptopForm
-        .validateFields()
-        .catch(setError(true));
+      const laptopData = await laptopForm.validateFields();
+
+      if (!laptopForm.getFieldValue("laptop_image")) {
+        setError(true);
+      }
+
       const employeeData = await employeeForm.validateFields();
 
       var values = {
