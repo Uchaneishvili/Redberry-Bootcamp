@@ -18,17 +18,6 @@ function Header() {
       <div className="head-inner-container">
         <img src={Arrow} className="back-arrow-image" alt="arrow" />
       </div>
-      <Tabs
-        type="line"
-        centered
-        defaultActiveKey={window.location.pathname}
-        onChange={(e) => {
-          changeTab(e);
-        }}
-      >
-        <TabPane tab="თანამშრომლის ინფო" key={"/employeeInfo"} />
-        <TabPane tab="ლეპტოპის ინფო" key={"/laptopSpecs"} />
-      </Tabs>
 
       <div style={{ width: "53px" }}></div>
     </div>
