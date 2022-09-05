@@ -12,7 +12,7 @@ function App() {
       { path: "/employeeInfo", element: <Create /> },
       { path: "/LaptopSpecs", element: <Create /> },
       { path: "/list", element: <List /> },
-      { path: "/info:id", element: <Detail /> },
+      { path: "/info/:id", element: <Detail /> },
     ]);
     return routes;
   };

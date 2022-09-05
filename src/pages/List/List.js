@@ -76,7 +76,9 @@ function List() {
                           </div>
 
                           <div className="see-more">
-                            <p>მეტის ნახვა</p>
+                            <a href={`/info/${data.laptop.id}`}>
+                              <p className="linked-see-more">მეტის ნახვა</p>
+                            </a>
                           </div>
                         </div>
                       </div>

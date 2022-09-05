@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-// import "./List.css";
 import arrow from "./Vector.svg";
 import Arrow from "./web-arrow.svg";
 import axios from "axios";
 import { Tabs, Row, Col, Form, Layout, Divider } from "antd";
 import "./Detail.css";
+import { useParams } from "react-router-dom";
 
 function Detail() {
+  const { id } = useParams();
   const [width, setWidth] = useState(window.innerWidth);
   const isMobile = width <= 391;
-  const [listData, setListData] = useState([]);
+  const [info, setInfo] = useState();
 
   const layout = {
     labelCol: { span: 10 },
@@ -30,11 +31,10 @@ function Detail() {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(
-          "https://pcfy.redberryinternship.ge/api/laptops?token=f39fea4fddada8a3a344125f8f9b6907"
+          `https://pcfy.redberryinternship.ge/api/laptop/${id}?token=f39fea4fddada8a3a344125f8f9b6907`
         );
 
-        console.log(data.data);
-        setListData(data.data);
+        setInfo(data.data);
       } catch (err) {
         console.error("list cannot be loaded", err);
       }
@@ -73,7 +73,7 @@ function Detail() {
                           <span className="field-name">სახელი:</span>
                         </Col>
                         <Col>
-                          <span className="field-value">გ25</span>
+                          <span className="field-value">{info?.user.name}</span>
                         </Col>
                       </div>
                       <div className="info-inline-container">
@@ -81,7 +81,9 @@ function Detail() {
                           <span className="field-name">თიმი:</span>
                         </Col>
                         <Col>
-                          <span className="field-value"> გ25</span>
+                          <span className="field-value">
+                            {info?.user.team_id}
+                          </span>
                         </Col>
                       </div>
                       <div className="info-inline-container">
@@ -89,7 +91,9 @@ function Detail() {
                           <span className="field-name">პოზიცია:</span>
                         </Col>
                         <Col>
-                          <span className="field-value"> გ25</span>
+                          <span className="field-value">
+                            {info?.user.position_id}
+                          </span>
                         </Col>
                       </div>
                       <div className="info-inline-container">
@@ -97,7 +101,9 @@ function Detail() {
                           <span className="field-name">მეილი:</span>
                         </Col>
                         <Col>
-                          <span className="field-value"> გ25</span>
+                          <span className="field-value">
+                            {info?.user.email}
+                          </span>
                         </Col>
                       </div>
                       <div className="info-inline-container">
@@ -105,7 +111,9 @@ function Detail() {
                           <span className="field-name">ტელ.ნომერი:</span>
                         </Col>
                         <Col>
-                          <span className="field-value"> გ25</span>
+                          <span className="field-value">
+                            {info?.user.phone_number}
+                          </span>
                         </Col>
                       </div>
                     </Form>
@@ -121,7 +129,9 @@ function Detail() {
                           <span className="field-name">ლეპტოპის სახელი:</span>
                         </Col>
                         <Col span={32}>
-                          <span className="field-value">გ25</span>
+                          <span className="field-value">
+                            {info?.laptop.name}
+                          </span>
                         </Col>
                       </div>
                       <div className="info-inline-container">
@@ -129,7 +139,9 @@ function Detail() {
                           <span className="field-name">ლეპტოპის ბრენდი:</span>
                         </Col>
                         <Col span={32}>
-                          <span className="field-value"> გ25</span>
+                          <span className="field-value">
+                            {info?.laptop.brand_id}
+                          </span>
                         </Col>
                       </div>
                       <div className="info-inline-container">
@@ -137,7 +149,9 @@ function Detail() {
                           <span className="field-name">RAM</span>
                         </Col>
                         <Col span={32}>
-                          <span className="field-value"> გ25</span>
+                          <span className="field-value">
+                            {info?.laptop.ram}
+                          </span>
                         </Col>
                       </div>
                       <div className="info-inline-container">
@@ -145,7 +159,9 @@ function Detail() {
                           <span className="field-name">მეხსიერების ტიპი</span>
                         </Col>
                         <Col>
-                          <span className="field-value"> გ25</span>
+                          <span className="field-value">
+                            {info?.laptop.hard_drive_type}
+                          </span>
                         </Col>
                       </div>
                     </Form>
@@ -157,7 +173,9 @@ function Detail() {
                           <span className="field-name">CPU:</span>
                         </Col>
                         <Col>
-                          <span className="field-value">გ25</span>
+                          <span className="field-value">
+                            {info?.laptop.cpu.name}
+                          </span>
                         </Col>
                       </div>
                       <div className="info-inline-container">
@@ -165,7 +183,9 @@ function Detail() {
                           <span className="field-name">CPU-ს ბირთვი:</span>
                         </Col>
                         <Col>
-                          <span className="field-value"> გ25</span>
+                          <span className="field-value">
+                            {info?.laptop.cpu.cores}
+                          </span>
                         </Col>
                       </div>
                       <div className="info-inline-container">
@@ -173,7 +193,9 @@ function Detail() {
                           <span className="field-name">CPU-ს ნაკადი:</span>
                         </Col>
                         <Col>
-                          <span className="field-value"> გ25</span>
+                          <span className="field-value">
+                            {info?.laptop.cpu.threads}
+                          </span>
                         </Col>
                       </div>
                     </Form>
@@ -190,7 +212,9 @@ function Detail() {
                           </span>
                         </Col>
                         <Col span={32}>
-                          <span className="field-value">მეორადი</span>
+                          <span className="field-value">
+                            {info?.laptop.state}
+                          </span>
                         </Col>
                       </div>
                       <div className="info-inline-container">
@@ -198,7 +222,9 @@ function Detail() {
                           <span className="field-name">ლეპტოპის ფასი:</span>
                         </Col>
                         <Col span={32}>
-                          <span className="field-value"> გ25</span>
+                          <span className="field-value">
+                            {info?.laptop.price}
+                          </span>
                         </Col>
                       </div>
                     </Form>
@@ -210,7 +236,9 @@ function Detail() {
                           <span className="field-name">შეძენის რიცხვი:</span>
                         </Col>
                         <Col>
-                          <span className="field-value">გ25</span>
+                          <span className="field-value">
+                            {info?.laptop.purchase_date}
+                          </span>
                         </Col>
                       </div>
                     </Form>

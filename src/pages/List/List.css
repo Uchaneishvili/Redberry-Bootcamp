@@ -96,3 +96,7 @@ body {
   font-style: Medium;
   font-family: "HelveticaNeue";
 }
+
+.linked-see-more {
+  text-decoration: underline;
+}
