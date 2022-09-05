@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import arrow from "./Vector.svg";
 import Arrow from "./web-arrow.svg";
 import axios from "axios";
-import { Tabs, Row, Col, Form, Layout, Divider } from "antd";
+import { Tabs, Col, Form, Divider } from "antd";
 import "./Detail.css";
 import { useParams } from "react-router-dom";
 import moment from "moment";
@@ -134,7 +134,7 @@ function Detail() {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   return (
     <div className="outter-container">
