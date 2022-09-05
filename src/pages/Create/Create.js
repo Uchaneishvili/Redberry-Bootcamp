@@ -4,7 +4,6 @@ import { Tabs, Steps } from "antd";
 import React, { useEffect, useState } from "react";
 import arrow from "./Vector.svg";
 import "./Create.css";
-import "../LaptopSpecs/LaptopSpecs.css";
 import { useNavigate } from "react-router-dom";
 import "../EmployeeInfo/EmployeeInfo.css";
 import Footer from "./Footer-logo.svg";
