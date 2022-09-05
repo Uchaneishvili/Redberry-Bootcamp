@@ -5,6 +5,7 @@ import axios from "axios";
 import { Tabs, Row, Col, Form, Layout, Divider } from "antd";
 import "./Detail.css";
 import { useParams } from "react-router-dom";
+import moment from "moment";
 
 function Detail() {
   const { id } = useParams();
@@ -16,6 +17,98 @@ function Detail() {
     labelCol: { span: 10 },
     wrapperCol: { span: 14 },
   };
+
+  const getTeamTitle = (val) => {
+    switch (val) {
+      case 1:
+        return "დეველოპერი";
+      case 2:
+        return "HR";
+      case 3:
+        return "გაყიდვები";
+      case 4:
+        return "დიზაინი";
+      case 5:
+        return "მარკეტინგი";
+
+      default:
+        return "";
+    }
+  };
+
+  const getState = (val) => {
+    switch (val) {
+      case "new":
+        return "ახალი";
+      case "used":
+        return "მეორადი";
+
+      default:
+        return "";
+    }
+  };
+  const getBrandName = (val) => {
+    switch (val) {
+      case 1:
+        return "HP";
+      case 2:
+        return "DELL";
+      case 3:
+        return "Microsoft";
+      case 4:
+        return "Apple";
+      case 5:
+        return "Lenovo";
+
+      default:
+        return "";
+    }
+  };
+
+  const getPositionTitle = (val) => {
+    switch (val) {
+      case 1:
+        return "ინტერნი";
+      case 2:
+        return "ჯუნიორ დეველოპერი";
+      case 3:
+        return "მიდლ დეველოპერი";
+      case 4:
+        return "სენიორ დეველოპერი";
+      case 5:
+        return "ლიდ დეველოპერი";
+      case 6:
+        return "HR სპეციალისტი";
+      case 7:
+        return "HR პროექტ მენეჯერი";
+      case 8:
+        return "HR ბიზნეს პარტნიორი";
+      case 9:
+        return "ჯუნიორ ბიზნეს დეველოპერი";
+      case 10:
+        return "ბიზნეს დეველოპერი";
+      case 11:
+        return "სენიორ ბიზნეს დეველოპერი";
+      case 12:
+        return "ჯუნიორ UI/UX დიზაინერი";
+      case 13:
+        return "UI/UX დიზაინერი";
+      case 14:
+        return "სენიორ UI/UX დიზაინერი";
+      case 15:
+        return "ლიდ UI/UX დიზაინერი";
+      case 16:
+        return "ბლოგერი";
+      case 17:
+        return "growth მარკეტინგის სპეციალისტი";
+      case 18:
+        return "მარკეტინგის თიმ ლიდი";
+
+      default:
+        return "";
+    }
+  };
+
   function handleWindowSizeChange() {
     setWidth(window.innerWidth);
   }
@@ -26,6 +119,8 @@ function Detail() {
       window.removeEventListener("resize", handleWindowSizeChange);
     };
   }, []);
+
+  console.log(moment("Wed Sep 07 2022 19:42:39 GMT+0400").format("DD/MM/YYYY"));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,7 +177,7 @@ function Detail() {
                         </Col>
                         <Col>
                           <span className="field-value">
-                            {info?.user.team_id}
+                            {getTeamTitle(info?.user.team_id)}
                           </span>
                         </Col>
                       </div>
@@ -92,7 +187,7 @@ function Detail() {
                         </Col>
                         <Col>
                           <span className="field-value">
-                            {info?.user.position_id}
+                            {getPositionTitle(info?.user.position_id)}
                           </span>
                         </Col>
                       </div>
@@ -140,7 +235,7 @@ function Detail() {
                         </Col>
                         <Col span={32}>
                           <span className="field-value">
-                            {info?.laptop.brand_id}
+                            {getBrandName(info?.laptop.brand_id)}
                           </span>
                         </Col>
                       </div>
@@ -213,7 +308,7 @@ function Detail() {
                         </Col>
                         <Col span={32}>
                           <span className="field-value">
-                            {info?.laptop.state}
+                            {getState(info?.laptop.state)}
                           </span>
                         </Col>
                       </div>
@@ -237,7 +332,9 @@ function Detail() {
                         </Col>
                         <Col>
                           <span className="field-value">
-                            {info?.laptop.purchase_date}
+                            {moment(info?.laptop.purchase_date).format(
+                              "DD/MM/YYYY"
+                            )}
                           </span>
                         </Col>
                       </div>
