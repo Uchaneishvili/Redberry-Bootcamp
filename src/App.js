@@ -10,7 +10,7 @@ function App() {
     let routes = useRoutes([
       { path: "/", element: <MainPage /> },
       { path: "/employeeInfo", element: <Create /> },
-      { path: "/LaptopSpecs", element: <Create /> },
+      { path: "/laptopSpecs", element: <Create /> },
       { path: "/list", element: <List /> },
       { path: "/info/:id", element: <Detail /> },
     ]);

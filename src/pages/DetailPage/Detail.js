@@ -154,7 +154,7 @@ function Detail() {
                 <div className="parent-info-inner-container">
                   <div className="left-side-info-container">
                     <img
-                      src="https://i.picsum.photos/id/1021/577/342.jpg?hmac=t2lkJ2Sd0sr0hhRsgF9lyoFOn43HnaLj2sXRI04qKf8"
+                      src={`https://pcfy.redberryinternship.ge/${info?.laptop.image}`}
                       alt="laptop"
                       width={"100%"}
                       className="laptop-info-image"

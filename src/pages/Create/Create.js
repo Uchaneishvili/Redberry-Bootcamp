@@ -37,6 +37,31 @@ function Create() {
   const [width, setWidth] = useState(window.innerWidth);
   const [isModal, setIsModal] = useState(false);
   const [state, setState] = useState("/employeeInfo");
+  const [value, setValue] = useState("");
+
+  const setDataToLocalstorage = () => {
+    localStorage.setItem(
+      "dataEmployee",
+      JSON.stringify(employeeForm.getFieldsValue())
+    );
+
+    localStorage.setItem(
+      "dataLaptop",
+      JSON.stringify(laptopForm.getFieldsValue())
+    );
+  };
+
+  useEffect(() => {
+    setState(window.location.pathname);
+
+    var employeeData = localStorage.getItem("dataEmployee");
+    employeeForm.setFieldsValue(JSON.parse(employeeData));
+    var laptopData = localStorage.getItem("dataLaptop");
+
+    laptopForm.setFieldsValue(JSON.parse(laptopData));
+    laptopForm.setFieldsValue({ laptop_image: "" });
+  }, []);
+
   let formData = new FormData();
   const navigate = useNavigate();
 
@@ -45,6 +70,15 @@ function Create() {
   function handleWindowSizeChange() {
     setWidth(window.innerWidth);
   }
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+    localStorage.setItem("inputValue", e.target.value);
+  };
+
+  useEffect(() => {
+    setValue(localStorage.getItem("inputValue"));
+  }, []);
 
   useEffect(() => {
     window.addEventListener("resize", handleWindowSizeChange);
@@ -181,7 +215,11 @@ function Create() {
             <div className="parent-container">
               <div className="main-container-container">
                 <div className="main-employee-container">
-                  <Form layout={"vertical"} form={employeeForm}>
+                  <Form
+                    layout={"vertical"}
+                    form={employeeForm}
+                    onChange={() => setDataToLocalstorage()}
+                  >
                     <div className="fullName-container">
                       <Form.Item
                         name={"name"}
@@ -198,7 +236,11 @@ function Create() {
                           { message: "შეიყვანეთ მინიმუმ 2 სიმბოლო", min: 2 },
                         ]}
                       >
-                        <Input className="custom-input firstName" />
+                        <Input
+                          className="custom-input firstName"
+                          value={value}
+                          onChange={handleChange}
+                        />
                       </Form.Item>
                       <Form.Item
                         name={"surname"}
@@ -331,7 +373,11 @@ function Create() {
             <div className="parent-container">
               <div className="main-container-container">
                 <div className="main-employee-container">
-                  <Form layout={"vertical"} form={laptopForm}>
+                  <Form
+                    layout={"vertical"}
+                    form={laptopForm}
+                    onChange={() => setDataToLocalstorage()}
+                  >
                     <Form.Item
                       name={"laptop_image"}
                       rules={[
