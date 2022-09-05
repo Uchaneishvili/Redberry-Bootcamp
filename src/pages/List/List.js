@@ -4,7 +4,6 @@ import arrow from "./Vector.svg";
 import Arrow from "./web-arrow.svg";
 import axios from "axios";
 import { Tabs } from "antd";
-import isDeleted from "./Rectangle_4.png";
 
 function List() {
   const [width, setWidth] = useState(window.innerWidth);

@@ -1,6 +1,6 @@
 import Arrow from "./web-arrow.svg";
 import { notification } from "antd";
-import { Tabs, Steps } from "antd";
+import { Tabs } from "antd";
 import React, { useEffect, useState } from "react";
 import arrow from "./Vector.svg";
 import "./Create.css";
@@ -23,8 +23,6 @@ import {
 } from "antd";
 import Camera from "./Camera_Vector.svg";
 
-const { TabPane } = Tabs;
-
 function Create() {
   const { Option } = Select;
   const [employeeForm] = Form.useForm();
@@ -42,7 +40,6 @@ function Create() {
   const [state, setState] = useState("/employeeInfo");
   let formData = new FormData();
   const navigate = useNavigate();
-  const { Step } = Steps;
 
   const isMobile = width <= 391;
 
@@ -86,6 +83,7 @@ function Create() {
         values,
         config
       );
+      setIsModal(true);
     } catch (err) {
       console.log("laptop cannot be added ", err);
     }
@@ -145,15 +143,6 @@ function Create() {
 
     fetchData();
   }, []);
-
-  const validateEmployeeForm = async () => {
-    try {
-      await employeeForm.validateFields();
-      navigate("/laptopSpecs");
-    } catch (err) {
-      console.log("validation error", err);
-    }
-  };
 
   const changeTab = async (activeKey) => {
     if (window.location.pathname === "/employeeInfo") {
@@ -609,7 +598,7 @@ function Create() {
               <div className="footer-logo-container">
                 <img src={Footer} alt="footer-redberry-icon" />
               </div>
-            </div>{" "}
+            </div>
           </Tabs.TabPane>
         </Tabs>
 
@@ -617,7 +606,7 @@ function Create() {
       </div>
 
       <div className="success-modal">
-        <Modal visible={false} footer={false} header={false} closable={false}>
+        <Modal visible={isModal} footer={false} header={false} closable={false}>
           <img src={Success} alt="success" />
 
           <p className="modal-title">ჩანაწერი დამატებულია!</p>
