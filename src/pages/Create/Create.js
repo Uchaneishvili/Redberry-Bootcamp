@@ -173,8 +173,11 @@ function Create() {
             className="back-arrow-image"
             alt="arrow"
             onClick={() => {
-              window.history.back();
-              changeTab();
+              if (state === "/laptopSpecs") {
+                changeTab();
+              } else {
+                navigate("/");
+              }
             }}
           />
         </div>
@@ -337,7 +340,6 @@ function Create() {
                   <Form layout={"vertical"} form={laptopForm}>
                     <Form.Item
                       name={"laptop_image"}
-                      label={"ლეპტოპის სახელი"}
                       rules={[
                         {
                           message: "ველის შევსება სავალდებულოა",
@@ -390,7 +392,7 @@ function Create() {
                           },
                           {
                             message: "გთხოვთ გამოიყენოთ ინგლისური ასოები",
-                            pattern: /^[a-zA-Z0-9!@#$%^&*()_+=]*$/,
+                            pattern: /^[a-zA-Z0-9!@#$%^&*()_+= ]*$/,
                           },
                         ]}
                       >
@@ -586,7 +588,10 @@ function Create() {
                   <div className="footer-buttons-container">
                     <Button
                       className="back-button"
-                      onClick={() => window.history.back()}
+                      onClick={() => {
+                        window.history.back();
+                        changeTab();
+                      }}
                     >
                       უკან
                     </Button>
