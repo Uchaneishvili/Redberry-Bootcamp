@@ -45,6 +45,7 @@ function List() {
           src={isMobile ? arrow : Arrow}
           className="back-arrow-image"
           alt="arrow"
+          onClick={() => window.history.back()}
         />
       </div>
       <Tabs activeKey={"list"}>

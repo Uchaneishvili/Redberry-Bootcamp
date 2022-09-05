@@ -61,6 +61,11 @@
   padding-bottom: 30px;
 }
 
+.head-inner-container {
+  cursor: pointer !important;
+  z-index: 1000;
+}
+
 .info-inline-container {
   display: flex;
   flex-direction: row;

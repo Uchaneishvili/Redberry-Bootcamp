@@ -97,6 +97,10 @@ body {
   font-family: "HelveticaNeue";
 }
 
+.head-inner-container {
+  cursor: pointer !important;
+  z-index: 1000;
+}
 .linked-see-more {
   text-decoration: underline;
 }

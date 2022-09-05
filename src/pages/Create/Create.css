@@ -95,6 +95,8 @@
 .head-inner-container {
   position: absolute;
   padding-left: 5%;
+  z-index: 1000;
+  cursor: pointer;
 }
 
 .outter-container {
